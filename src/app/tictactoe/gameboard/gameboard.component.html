@@ -1,0 +1,33 @@
+<div class="h-100">
+    <div class="d-flex align-items-center justify-content-center flex-column">
+        <h1>TicTacToe Remastered</h1>
+        <ng-container *ngIf="gameService.state === 'running'">
+            <p *ngIf="gameService.cooldown">Cooling down... Player change</p>
+            <p *ngIf="!gameService.cooldown">Player {{gameService.isPlaying}}´s turn</p>
+        </ng-container>
+        <h3 *ngIf="gameService.state === 'win'">Player {{gameService.isPlaying}} has won!🥳 Congratulations!</h3>
+        <h3 *ngIf="gameService.state === 'draw'">Mhhh... Looks like a draw. Nobody wins!</h3>
+        <div class="d-flex align-items-center justify-content-between">
+            <app-card [cardId]="0" [selected]="gameService.gameBoard[0]"></app-card>
+            <app-card [cardId]="1" [selected]="gameService.gameBoard[1]"></app-card>
+            <app-card [cardId]="2" [selected]="gameService.gameBoard[2]"></app-card>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+            <app-card [cardId]="3" [selected]="gameService.gameBoard[3]"></app-card>
+            <app-card [cardId]="4" [selected]="gameService.gameBoard[4]"></app-card>
+            <app-card [cardId]="5" [selected]="gameService.gameBoard[5]"></app-card>
+        </div>
+        <div class="d-flex align-items-center justify-content-between">
+            <app-card [cardId]="6" [selected]="gameService.gameBoard[6]"></app-card>
+            <app-card [cardId]="7" [selected]="gameService.gameBoard[7]"></app-card>
+            <app-card [cardId]="8" [selected]="gameService.gameBoard[8]"></app-card>
+        </div>
+        <h5>A game by André Borgert</h5>
+    </div>
+    <div class="position-absolute bottom-0 end-0 m-3">
+        <app-webcam></app-webcam>
+    </div>
+    <div class="position-absolute top-0 start-0">
+        <app-mouse></app-mouse>
+    </div>
+</div>
