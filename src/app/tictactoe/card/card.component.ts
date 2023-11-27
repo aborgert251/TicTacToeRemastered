@@ -8,8 +8,14 @@ import { SelectedPlayer } from '../types/selected-player.type';
 })
 export class CardComponent {
 
+  /**
+   * The id of this card.
+   */
   @Input() cardId!: number;
 
+  /**
+   * Symbol of the card. 'X' | 'O' or nothing selected
+   */
   @Input() selected: SelectedPlayer = '';
 
 }
