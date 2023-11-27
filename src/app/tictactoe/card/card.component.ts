@@ -1,27 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { SelectedPlayer } from '../types/selected-player.type';
 
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
-export class CardComponent implements OnInit {
-
-  private _selected: 'X' | 'O' | '' = '';
+export class CardComponent {
 
   @Input() cardId!: number;
 
-  @Input() set selected(selected: 'X' | 'O' | '') {
-    this._selected = selected;
-  }
-
-  get selected() {
-    return this._selected;
-  }
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  @Input() selected: SelectedPlayer = '';
 
 }

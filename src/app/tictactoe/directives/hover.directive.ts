@@ -1,38 +1,52 @@
 import { Directive, Input, ElementRef } from '@angular/core';
 import { MouseService } from '../services/mouse.service';
+import { BoundingBox } from '../interfaces/box.interface';
 
 @Directive({
   selector: '[appHover]'
 })
 export class HoverDirective {
 
-  isHovering: boolean = false;
+  /**
+   * The cardId that is hovered.
+   */
+  @Input() cardId?: number;
 
-  @Input() cardId!: number;
+  /**
+   * Indication if the mouseService should be notified. By default it is notified.
+   */
+  @Input() notifyMouseService = true;
 
-  @Input() notifyMouseService: boolean = true;
-
+  /**
+   * Checks on every mouse position update if the mouse is hovering the given element, sets the css class to indicate hovering state. It also notifies
+   * the mouseService which card is hovered if needed and a cardId is given.
+   * 
+   * @param {ElementRef<HTMLElement>} element - The element the directive is bind to. 
+   * @param {MouseService} mouseService - The service that handles all things around mouse movement, hovered objects etc. 
+   */
   constructor(private element: ElementRef<HTMLElement>, private mouseService: MouseService) {
     this.mouseService.positionUpdated$.subscribe(() => {
-      if(this.checkHover(element.nativeElement.getBoundingClientRect())) {
-        this.isHovering = true;
-        this.element.nativeElement.classList.add('hovering');
+      const isHovering = this.checkHover(element.nativeElement.getBoundingClientRect());
 
-        if(this.notifyMouseService) {
-          this.mouseService.hoveringCardId[this.cardId] = true;
-        }
-      } else {
-        this.isHovering = false;
-        this.element.nativeElement.classList.remove('hovering');
+      if(this.notifyMouseService && this.cardId) {
+        this.mouseService.hoveringCardId[this.cardId] = isHovering;
+      }
 
-        if(this.notifyMouseService) {
-          this.mouseService.hoveringCardId[this.cardId] = false;
-        }
-      };
+      if(isHovering) {
+        return this.element.nativeElement.classList.add('hovering');
+      }
+      
+      this.element.nativeElement.classList.remove('hovering');
     });
   }
 
-  private checkHover({ x, y, width, height }: {x: number, y: number, width: number, height: number}): boolean {
+/**
+ * Checks if the mouse cursor is hovering over a specified area defined by the bounding box.
+ *
+ * @param {BoundingBox} boundingBox - The bounding box representing the area to be checked.
+ * @returns {boolean} - Returns true if the mouse cursor is within the specified area, otherwise false.
+ */
+  private checkHover({ x, y, width, height }: BoundingBox): boolean {
     const mousePosX = this.mouseService.posX;
     const mousePosY = this.mouseService.posY;
 

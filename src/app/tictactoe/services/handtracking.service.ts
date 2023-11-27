@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Camera } from '@mediapipe/camera_utils';
 import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
-import { Hands, HAND_CONNECTIONS } from '@mediapipe/hands';
+import { Hands, HAND_CONNECTIONS, Landmark, LandmarkList, Results } from '@mediapipe/hands';
 import { MouseService } from './mouse.service';
 import { GameService } from './game.service';
 
@@ -10,22 +10,49 @@ import { GameService } from './game.service';
 })
 export class HandTrackingService {
 
+  /**
+   * The HTML element of the mouse
+   */
   mouseElement?: HTMLElement;
 
+  /**
+   * The width of the screen
+   */
   screenWidth = window.innerWidth;
 
+  /**
+   * The height of the screen
+   */
   screenHeight = window.innerHeight;
 
+  /**
+   * The HTML element of the canvas
+   */
   canvasElement!: HTMLCanvasElement;
 
+  /**
+   * The 2D DrawingContext of the canvas element
+   */
   canvas2dContext!: CanvasRenderingContext2D;
 
+  /**
+   * The video HTML element
+   */
   videoElement!: HTMLVideoElement;
 
+  /**
+   * Instanciation of Hands - Downloads the needed model from google/mediapipe
+   */
   hands = new Hands({locateFile: (file) => {
     return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
   }});
 
+  /**
+   * Inject some dependencies via dependency injection, set hands options and bind the result callback.
+   * 
+   * @param {MouseService} mouseService - Service that handles all mouse related stuff
+   * @param {GameService} gameService - Service that handles all game related stuff 
+   */
   constructor(private mouseService: MouseService, private gameService: GameService) { 
     this.hands.setOptions({
       maxNumHands: 1,
@@ -37,6 +64,13 @@ export class HandTrackingService {
     this.hands.onResults((results) => this.onResults(results));
   }
 
+  /**
+   * Initialize the handtracking service by setting video element, canvas element and 2D Drawing context.
+   * Starts webcam if all elements are given.
+   * 
+   * @param {HTMLVideoElement} videoElement - The video element
+   * @param {HTMLCanvasElement} canvasElement - The element of the canvas where the video is drawn 
+   */
   initialize(videoElement: HTMLVideoElement, canvasElement: HTMLCanvasElement) {
     const ctx = canvasElement.getContext('2d');
     if(!ctx) {
@@ -50,6 +84,9 @@ export class HandTrackingService {
     this.startCamera();
   }
 
+  /**
+   * Creating a new Camera and start it. Frames are send to Hands for handtracking. 
+   */
   private startCamera() {
     const camera = new Camera(this.videoElement, {
       onFrame: async () => {
@@ -62,7 +99,13 @@ export class HandTrackingService {
     camera.start();
   }
 
-  private onResults(results: any) {
+  /**
+   * Result callback for the handtracking. Draws landmarks and sets mouse position.
+   * 
+   * @param {Results} results - Results of the handtracking
+   * @returns 
+   */
+  private onResults(results: Results) {
     if(!this.canvas2dContext) {
       return;
     }
@@ -92,14 +135,21 @@ export class HandTrackingService {
           );
         }
 
-        //drawConnectors(this.canvas2dContext, landmarks, HAND_CONNECTIONS, {color: '#00FF00', lineWidth: 0.5});
-        //drawLandmarks(this.canvas2dContext, landmarks, {color: '#FF0000', lineWidth: 0.5});
+        // Draw all HandConnectors - Helpful for debugging purposes.
+        // drawConnectors(this.canvas2dContext, landmarks, HAND_CONNECTIONS, {color: '#00FF00', lineWidth: 0.5});
+        // drawLandmarks(this.canvas2dContext, landmarks, {color: '#FF0000', lineWidth: 0.5});
       }
     }
     this.canvas2dContext.restore();
   }
 
-  getCenter(landmarks: {x: number, y: number, z: number}[]): {x: number, y: number, z: number} {
+  /**
+   * Get the center landmark that the mouse position is synced to later on.
+   * 
+   * @param {LandmarkList} landmarks - The found landmarks of the hand 
+   * @returns {Landmark} - the center landmark
+   */
+  getCenter(landmarks: LandmarkList): Landmark {
     landmarks.splice(4, 1);
     landmarks.splice(12, 1);
 
@@ -117,7 +167,12 @@ export class HandTrackingService {
     }
   }
 
-  checkClick(landmarks: {x: number, y: number, z: number}[]): boolean {
+  /**
+   * Check if the mouse is clicked by calculating the distance between tip of the thumb and tip of the middle finger.
+   * @param landmarks 
+   * @returns {boolean} - true if the distance is smaller than 0.1
+   */
+  checkClick(landmarks: LandmarkList): boolean {
     if(landmarks.length === 0) {
       return false;
     }

@@ -8,11 +8,22 @@ import { MouseService } from '../services/mouse.service';
 })
 export class MouseComponent implements AfterViewInit {
 
+  /**
+   * Get the div HTML Element of the "mouse"
+   */
   @ViewChild('mouse') mouse?: ElementRef<HTMLElement>;
 
+  /**
+   * Inject dependency via Dependency Injection.
+   * 
+   * @param {MouseService} mouseService - Service that handles all "mouse" related stuff. 
+   */
   constructor(public mouseService: MouseService) { }
 
-  ngAfterViewInit(): void {
+  /**
+   * Pass the mouse HTML Element to the mouseService to connect it and e.g. update the position. 
+   */
+  ngAfterViewInit() {
     if(!this.mouse) {
       return;
     }
