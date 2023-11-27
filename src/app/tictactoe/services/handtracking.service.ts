@@ -5,6 +5,10 @@ import { Hands, HAND_CONNECTIONS, Landmark, LandmarkList, Results } from '@media
 import { MouseService } from './mouse.service';
 import { GameService } from './game.service';
 
+/**
+ * Example that was the reference for implementation of the hand tracking:
+ * https://github.com/google/mediapipe/blob/master/docs/solutions/hands.md#javascript-solution-api
+ */
 @Injectable({
   providedIn: 'root'
 })
