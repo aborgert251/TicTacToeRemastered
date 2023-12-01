@@ -28,7 +28,7 @@ export class HoverDirective {
     this.mouseService.positionUpdated$.subscribe(() => {
       const isHovering = this.checkHover(element.nativeElement.getBoundingClientRect());
 
-      if(this.notifyMouseService && this.cardId) {
+      if(this.notifyMouseService && this.cardId !== undefined && this.cardId !== null) {
         this.mouseService.hoveringCardId[this.cardId] = isHovering;
       }
 
