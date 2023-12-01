@@ -1,6 +1,10 @@
 # TicTacToeRemastered
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.2.
+## How to play?
+The whole project is controled via gestures. The application detects the center of the hand that is recognized by the webcam. This point is marked by a yellow dot and represents the mouse position. To click you could move the tip of your thumb and the tip of your middle finger close together.
+
+## Framework
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.5.
 
 ## Development server
 
