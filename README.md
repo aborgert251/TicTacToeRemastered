@@ -3,6 +3,14 @@
 ## How to play?
 The whole project is controled via gestures. The application detects the center of the hand that is recognized by the webcam. This point is marked by a yellow dot and represents the mouse position. To click you could move the tip of your thumb and the tip of your middle finger close together.
 
+# Development
+
+## Prerequisites
+- Node ^18.13.0 || ^20.9.0
+
+## Install packages
+Before you start you need to install all required dependencies via `npm install`.
+
 ## Framework
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.5.
 
