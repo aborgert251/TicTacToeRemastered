@@ -11,11 +11,11 @@ export class CardComponent {
   /**
    * The id of this card.
    */
-  @Input() cardId!: number;
+  @Input({required: true}) cardId!: number;
 
   /**
    * Symbol of the card. 'X' | 'O' or nothing selected
    */
-  @Input() selected: SelectedPlayer = '';
+  @Input({required: true}) selected: SelectedPlayer = '';
 
 }
