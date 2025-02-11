@@ -8,8 +8,8 @@ describe('WebcamComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WebcamComponent ]
-    })
+    imports: [WebcamComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(WebcamComponent);

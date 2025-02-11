@@ -2,9 +2,10 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { MouseService } from '../services/mouse.service';
 
 @Component({
-  selector: 'app-mouse',
-  templateUrl: './mouse.component.html',
-  styleUrls: ['./mouse.component.scss']
+    selector: 'app-mouse',
+    templateUrl: './mouse.component.html',
+    styleUrls: ['./mouse.component.scss'],
+    standalone: true
 })
 export class MouseComponent implements AfterViewInit {
 

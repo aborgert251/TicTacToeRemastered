@@ -8,8 +8,8 @@ describe('MouseComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MouseComponent ]
-    })
+    imports: [MouseComponent]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(MouseComponent);

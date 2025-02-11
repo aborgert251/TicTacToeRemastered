@@ -23,6 +23,11 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": [
+              "@mediapipe/camera_utils",
+              "@mediapipe/drawing_utils",
+              "@mediapipe/hands"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"

@@ -1,10 +1,13 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HandTrackingService } from '../services/handtracking.service';
+import { HoverDirective } from '../directives/hover.directive';
 
 @Component({
-  selector: 'app-webcam',
-  templateUrl: './webcam.component.html',
-  styleUrls: ['./webcam.component.scss']
+    selector: 'app-webcam',
+    templateUrl: './webcam.component.html',
+    styleUrls: ['./webcam.component.scss'],
+    standalone: true,
+    imports: [HoverDirective]
 })
 export class WebcamComponent implements AfterViewInit {
 

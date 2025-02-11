@@ -3,7 +3,8 @@ import { MouseService } from '../services/mouse.service';
 import { BoundingBox } from '../interfaces/box.interface';
 
 @Directive({
-  selector: '[appHover]'
+    selector: '[appHover]',
+    standalone: true
 })
 export class HoverDirective {
 
