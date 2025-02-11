@@ -1,4 +1,4 @@
-import { Directive, Input, ElementRef } from '@angular/core';
+import { Directive, Input, ElementRef, inject } from '@angular/core';
 import { MouseService } from '../services/mouse.service';
 import { BoundingBox } from '../interfaces/box.interface';
 
@@ -7,6 +7,9 @@ import { BoundingBox } from '../interfaces/box.interface';
     standalone: true
 })
 export class HoverDirective {
+  private element = inject<ElementRef<HTMLElement>>(ElementRef);
+  private mouseService = inject(MouseService);
+
 
   /**
    * The cardId that is hovered.
@@ -25,7 +28,9 @@ export class HoverDirective {
    * @param {ElementRef<HTMLElement>} element - The element the directive is bind to. 
    * @param {MouseService} mouseService - The service that handles all things around mouse movement, hovered objects etc. 
    */
-  constructor(private element: ElementRef<HTMLElement>, private mouseService: MouseService) {
+  constructor() {
+    const element = this.element;
+
     this.mouseService.positionUpdated$.subscribe(() => {
       const isHovering = this.checkHover(element.nativeElement.getBoundingClientRect());
 

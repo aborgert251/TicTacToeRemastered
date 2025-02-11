@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Camera } from '@mediapipe/camera_utils';
 import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
 import { Hands, HAND_CONNECTIONS, Landmark, LandmarkList, Results } from '@mediapipe/hands';
@@ -13,6 +13,9 @@ import { GameService } from './game.service';
   providedIn: 'root'
 })
 export class HandTrackingService {
+  private mouseService = inject(MouseService);
+  private gameService = inject(GameService);
+
 
   /**
    * The HTML element of the mouse
@@ -57,7 +60,7 @@ export class HandTrackingService {
    * @param {MouseService} mouseService - Service that handles all mouse related stuff
    * @param {GameService} gameService - Service that handles all game related stuff 
    */
-  constructor(private mouseService: MouseService, private gameService: GameService) { 
+  constructor() { 
     this.hands.setOptions({
       maxNumHands: 1,
       modelComplexity: 1,

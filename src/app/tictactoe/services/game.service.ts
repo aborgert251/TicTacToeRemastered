@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { MouseService } from './mouse.service';
 import { SelectedPlayer } from '../types/selected-player.type';
 import { GameState } from '../types/game-state.type';
@@ -7,6 +7,8 @@ import { GameState } from '../types/game-state.type';
   providedIn: 'root'
 })
 export class GameService {
+  private mouseService = inject(MouseService);
+
 
   /**
    * Cooldown to freeze game between turns
@@ -38,7 +40,7 @@ export class GameService {
    * 
    * @param {MouseService} mouseService - Service to handle all mouse related stuff
    */
-  constructor(private mouseService: MouseService) { 
+  constructor() { 
     this.mouseService.mouseClicked$.subscribe(() => {
       const cardId = this.mouseService.hoveringCardId.findIndex(element => element);
       const isClicking = this.mouseService.isClicking;

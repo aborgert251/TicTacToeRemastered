@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { HandTrackingService } from '../services/handtracking.service';
 import { HoverDirective } from '../directives/hover.directive';
 
@@ -10,6 +10,8 @@ import { HoverDirective } from '../directives/hover.directive';
     imports: [HoverDirective]
 })
 export class WebcamComponent implements AfterViewInit {
+  private handtrackingService = inject(HandTrackingService);
+
 
   /**
    * Get the video HTML Element
@@ -20,13 +22,6 @@ export class WebcamComponent implements AfterViewInit {
    * Get the canvas HTML Element
    */
   @ViewChild('canvas') canvas?: ElementRef<HTMLCanvasElement>;
-
-  /**
-   * Inject some dependencies via Dependency Injection
-   * 
-   * @param {HandtrackingService} handtrackingService - The service that handles all hand tracking related stuff
-   */
-  constructor(private handtrackingService: HandTrackingService) { }
 
   /**
    * Initialize the handTrackingService by passing the HTML Video and Canvas element into initialize function of the service.

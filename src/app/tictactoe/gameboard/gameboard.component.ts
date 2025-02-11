@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { GameService } from '../services/game.service';
 
 import { CardComponent } from '../card/card.component';
@@ -13,11 +13,6 @@ import { MouseComponent } from '../mouse/mouse.component';
     imports: [CardComponent, WebcamComponent, MouseComponent]
 })
 export class GameboardComponent {
-
-  /**
-   * Inject dependency via dependency injection
-   * @param {GameService} gameService - The service to handle all game related stuff.
-   */
-  constructor(public gameService: GameService) { }
+  gameService = inject(GameService);
 
 }
