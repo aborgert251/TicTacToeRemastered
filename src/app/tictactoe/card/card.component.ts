@@ -6,7 +6,6 @@ import { HoverDirective } from '../directives/hover.directive';
     selector: 'app-card',
     templateUrl: './card.component.html',
     styleUrls: ['./card.component.scss'],
-    standalone: true,
     imports: [HoverDirective]
 })
 export class CardComponent {

@@ -9,7 +9,6 @@ import { MouseComponent } from '../mouse/mouse.component';
     selector: 'app-gameboard',
     templateUrl: './gameboard.component.html',
     styleUrls: ['./gameboard.component.scss'],
-    standalone: true,
     imports: [CardComponent, WebcamComponent, MouseComponent]
 })
 export class GameboardComponent {

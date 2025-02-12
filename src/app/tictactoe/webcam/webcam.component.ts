@@ -6,7 +6,6 @@ import { HoverDirective } from '../directives/hover.directive';
     selector: 'app-webcam',
     templateUrl: './webcam.component.html',
     styleUrls: ['./webcam.component.scss'],
-    standalone: true,
     imports: [HoverDirective]
 })
 export class WebcamComponent implements AfterViewInit {
